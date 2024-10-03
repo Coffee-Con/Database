@@ -14,6 +14,20 @@ CREATE TABLE `user` (
   PRIMARY KEY (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `group` (
+  `GroupID` int NOT NULL AUTO_INCREMENT,
+  `GroupName` varchar(100) NOT NULL,
+  PRIMARY KEY (`GroupID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `group_user` (
+  `GroupID` int NOT NULL,
+  `UserID` int NOT NULL,
+  PRIMARY KEY (`GroupID`, `UserID`),
+  FOREIGN KEY (`GroupID`) REFERENCES `group`(`GroupID`),
+  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `email_template` (
   `id` int NOT NULL AUTO_INCREMENT,
   `content` json NOT NULL,
