@@ -49,4 +49,13 @@ CREATE TABLE `click_event` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE reset_tokens (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    token_expiry DATETIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE CASCADE
+);
+
 INSERT INTO `COMP`.`user` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
