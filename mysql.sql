@@ -49,7 +49,7 @@ CREATE TABLE `click_event` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE reset_tokens (
+CREATE TABLE `reset_tokens` (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     token VARCHAR(64) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `Course` (
   `CourseName` varchar(100) NOT NULL,
   `CourseDescription` varchar(100) DEFAULT 'Course Description',
   PRIMARY KEY (`CourseID`)
-)
+);
 
 -- 创建 Course_User 中间表
 CREATE TABLE `Course_User` (
