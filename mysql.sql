@@ -62,8 +62,9 @@ CREATE TABLE reset_tokens (
 CREATE TABLE `Course` (
   `CourseID` int NOT NULL AUTO_INCREMENT,
   `CourseName` varchar(100) NOT NULL,
+  `CourseDescription` varchar(100) DEFAULT 'Course Description',
   PRIMARY KEY (`CourseID`)
-);
+)
 
 -- 创建 Course_User 中间表
 CREATE TABLE `Course_User` (
@@ -73,7 +74,6 @@ CREATE TABLE `Course_User` (
   FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`),
   FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
 );
-
 
 INSERT INTO `COMP`.`user` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
 
