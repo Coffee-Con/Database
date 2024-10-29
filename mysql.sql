@@ -75,7 +75,130 @@ CREATE TABLE `Course_User` (
   FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
 );
 
+-- 创建 Quiz 表 
+CREATE TABLE `Quiz` (
+  `QuizID` int NOT NULL AUTO_INCREMENT,
+  `CourseID` int NOT NULL,
+  `QuizName` varchar(100) NOT NULL,
+  `QuizDescription` varchar(100) DEFAULT 'Quiz Description',
+  -- `StartTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  -- `DueTime` timestamp,?
+  PRIMARY KEY (`QuizID`),
+  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`)
+);
+
+-- 创建 QuestionType 表
+CREATE TABLE `QuestionType` (
+  `QuestionTypeID` int NOT NULL AUTO_INCREMENT,
+  `QuestionTypeName` varchar(100) NOT NULL,
+  PRIMARY KEY (`QuestionTypeID`)
+);
+
+-- 创建 Question 表
+CREATE TABLE `Question` (
+  `QuestionID` int NOT NULL AUTO_INCREMENT,
+  `QuizID` int NOT NULL,
+  `Question` varchar(100) NOT NULL,
+  `QuestionType` int NOT NULL,
+  `Answer` JSON NOT NULL,
+  PRIMARY KEY (`QuestionID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
+  FOREIGN KEY (`QuestionType`) REFERENCES `QuestionType`(`QuestionTypeID`)
+);
+
+-- 创建 UserQuizAnswer 表
+CREATE TABLE `UserQuizAnswer` (
+  `UserID` int NOT NULL,
+  `QuizID` int NOT NULL,
+  `QuestionID` int NOT NULL,
+  `Answer` JSON NOT NULL,
+  `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UserID`, `QuizID`, `QuestionID`),
+  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
+  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`)
+);
+
+-- 创建 UserQuizScore 表
+CREATE TABLE `UserQuizScore` (
+  `UserID` int NOT NULL,
+  `QuizID` int NOT NULL,
+  `Score` int NOT NULL,
+  `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UserID`, `QuizID`),
+  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
+);
+
+-- 创建 QuizStatusType 表
+CREATE TABLE `QuizStatusType` (
+  `StatusID` int NOT NULL AUTO_INCREMENT,
+  `StatusName` varchar(100) NOT NULL,
+  PRIMARY KEY (`StatusID`)
+);
+
+-- 创建 UserQuizStatus 表
+CREATE TABLE `UserQuizStatus` (
+  `UserID` int NOT NULL,
+  `QuizID` int NOT NULL,
+  `StatusID` int NOT NULL,
+  PRIMARY KEY (`UserID`, `QuizID`),
+  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
+  FOREIGN KEY (`StatusID`) REFERENCES `QuizStatusType`(`StatusID`)
+);
+
+-- 创建 CourseMaterial 表
+CREATE TABLE `CourseMaterial` (
+  `MaterialID` int NOT NULL AUTO_INCREMENT,
+  `CourseID` int NOT NULL,
+  `MaterialName` varchar(100) NOT NULL,
+  `MaterialDescription` varchar(100) DEFAULT 'Material Description',
+  `MaterialLink` varchar(100) NOT NULL, -- link to the material(a webpage or youtube video?)
+  PRIMARY KEY (`MaterialID`),
+  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`)
+);
+
+-- 创建 Reward 表
+CREATE TABLE `Reward` (
+  `RewardID` int NOT NULL AUTO_INCREMENT,
+  `RewardName` varchar(100) NOT NULL,
+  `RewardDescription` varchar(100) DEFAULT 'Reward Description',
+  `RewardPoint` int NOT NULL, -- Price for the reward
+  `RewardLink` varchar(100) NOT NULL, -- link to the reward(a webpage?)
+  PRIMARY KEY (`RewardID`)
+);
+
+-- 创建 UserRewardPoint 表
+CREATE TABLE `UserRewardPoint` (
+  `UserID` int NOT NULL,
+  `RewardPoint` int NOT NULL,
+  PRIMARY KEY (`UserID`),
+  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
+);
+
+-- 创建 UserRewardPointHistory 表
+CREATE TABLE `UserRewardPointHistory` (
+  `ActionID` int NOT NULL AUTO_INCREMENT,
+  `UserID` int NOT NULL,
+  `Action` varchar(100) NOT NULL, -- Action: get + or use -
+  `ActionDetail` varchar(100), -- ActionDetail: the reward name
+  `RewardPoint` int NOT NULL,
+  `ActionTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Time when the user get the reward
+  PRIMARY KEY (`ActionID`, `UserID`) -- 1ActionID to multiple UserID
+);
+
+-- 创建 UserReward 表
+CREATE TABLE `UserReward` (
+  `UserID` int NOT NULL,
+  `RewardID` int NOT NULL,
+  `RewardTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Time when the user get the reward
+  PRIMARY KEY (`UserID`, `RewardID`),
+  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`)
+);
+
 INSERT INTO `COMP`.`user` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
 
 INSERT INTO `COMP`.`Course` (`CourseID`, `CourseName`) VALUES ('1', 'Anti-Phishing');
-INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1');
+INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1')
