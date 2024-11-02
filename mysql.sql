@@ -78,12 +78,19 @@ CREATE TABLE `Course_User` (
 -- 创建 Quiz 表 
 CREATE TABLE `Quiz` (
   `QuizID` int NOT NULL AUTO_INCREMENT,
-  `CourseID` int NOT NULL,
   `QuizName` varchar(100) NOT NULL,
   `QuizDescription` varchar(100) DEFAULT 'Quiz Description',
   -- `StartTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   -- `DueTime` timestamp,?
   PRIMARY KEY (`QuizID`),
+);
+
+-- 创建 QuizCourse 中间表 -- 一个quiz可以对应多个course
+CREATE TABLE `QuizCourse` (
+  `QuizID` int NOT NULL,
+  `CourseID` int NOT NULL,
+  PRIMARY KEY (`QuizID`, `CourseID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
   FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`)
 );
 
