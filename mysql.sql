@@ -82,7 +82,7 @@ CREATE TABLE `Quiz` (
   `QuizDescription` varchar(100) DEFAULT 'Quiz Description',
   -- `StartTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   -- `DueTime` timestamp,?
-  PRIMARY KEY (`QuizID`),
+  PRIMARY KEY (`QuizID`)
 );
 
 -- 创建 QuizCourse 中间表 -- 一个quiz可以对应多个course
@@ -109,7 +109,6 @@ CREATE TABLE `Question` (
   `Answer` JSON NOT NULL,
   `CorrectAnswer` JSON NOT NULL,
   PRIMARY KEY (`QuestionID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
   FOREIGN KEY (`QuestionType`) REFERENCES `QuestionType`(`QuestionTypeID`)
 );
 
@@ -217,7 +216,7 @@ CREATE TABLE `UserReward` (
 INSERT INTO `COMP`.`user` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
 
 INSERT INTO `COMP`.`Course` (`CourseID`, `CourseName`) VALUES ('1', 'Anti-Phishing');
-INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1')
+INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1');
 
 INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES ('1', 'MCQ');
 INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES ('2', 'Fill in the Blanks');
