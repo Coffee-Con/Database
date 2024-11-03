@@ -108,6 +108,7 @@ CREATE TABLE `Question` (
   `Question` varchar(100) NOT NULL,
   `QuestionType` int NOT NULL,
   `Answer` JSON NOT NULL,
+  `CorrectAnswer` JSON NOT NULL,
   PRIMARY KEY (`QuestionID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
   FOREIGN KEY (`QuestionType`) REFERENCES `QuestionType`(`QuestionTypeID`)
