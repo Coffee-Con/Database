@@ -104,7 +104,6 @@ CREATE TABLE `QuestionType` (
 -- 创建 Question 表
 CREATE TABLE `Question` (
   `QuestionID` int NOT NULL AUTO_INCREMENT,
-  `QuizID` int NOT NULL,
   `Question` varchar(100) NOT NULL,
   `QuestionType` int NOT NULL,
   `Answer` JSON NOT NULL,
@@ -112,6 +111,15 @@ CREATE TABLE `Question` (
   PRIMARY KEY (`QuestionID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
   FOREIGN KEY (`QuestionType`) REFERENCES `QuestionType`(`QuestionTypeID`)
+);
+
+-- 创建 QuizQuestion 中间表
+CREATE TABLE `QuizQuestion` (
+  `QuizID` int NOT NULL,
+  `QuestionID` int NOT NULL,
+  PRIMARY KEY (`QuizID`, `QuestionID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
+  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`)
 );
 
 -- 创建 UserQuizAnswer 表
@@ -210,3 +218,6 @@ INSERT INTO `COMP`.`user` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `H
 
 INSERT INTO `COMP`.`Course` (`CourseID`, `CourseName`) VALUES ('1', 'Anti-Phishing');
 INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1')
+
+INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES ('1', 'MCQ');
+INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES ('2', 'Fill in the Blanks');
