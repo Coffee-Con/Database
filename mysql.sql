@@ -106,7 +106,7 @@ CREATE TABLE `Question` (
   `QuestionID` int NOT NULL AUTO_INCREMENT,
   `Question` varchar(100) NOT NULL,
   `QuestionType` int NOT NULL,
-  `Answer` JSON NOT NULL,
+  `Answer` JSON,
   `CorrectAnswer` JSON NOT NULL,
   PRIMARY KEY (`QuestionID`),
   FOREIGN KEY (`QuestionType`) REFERENCES `QuestionType`(`QuestionTypeID`)
@@ -125,13 +125,11 @@ CREATE TABLE `QuizQuestion` (
 CREATE TABLE `UserQuizAnswer` (
   `UserID` int NOT NULL,
   `QuizID` int NOT NULL,
-  `QuestionID` int NOT NULL,
   `Answer` JSON NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`UserID`, `QuizID`, `QuestionID`),
+  PRIMARY KEY (`UserID`, `QuizID`),
   FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
-  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`)
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
 );
 
 -- 创建 UserQuizScore 表
@@ -220,3 +218,10 @@ INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1');
 
 INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES ('1', 'MCQ');
 INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES ('2', 'Fill in the Blanks');
+
+INSERT INTO `COMP`.`QuizStatusType` (`StatusID`, `StatusName`) VALUES ('1', 'ToDo');
+INSERT INTO `COMP`.`QuizStatusType` (`StatusID`, `StatusName`) VALUES ('2', 'Completed');
+INSERT INTO `COMP`.`Quiz` (`QuizID`, `QuizName`, `QuizDescription`) VALUES ('1', 'Testing', 'TestingDescription');
+INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`, `CorrectAnswer`) VALUES ('1', 'What?Choose aaa', '1', '[\"aaa\", \"aavv\"]', '[\"aaa\"]');
+INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
+INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '1');
