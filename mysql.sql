@@ -117,8 +117,8 @@ CREATE TABLE `QuizQuestion` (
   `QuizID` int NOT NULL,
   `QuestionID` int NOT NULL,
   PRIMARY KEY (`QuizID`, `QuestionID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
-  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`)
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE,
+  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`) ON DELETE CASCADE
 );
 
 -- 创建 UserQuizAnswer 表
