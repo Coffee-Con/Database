@@ -122,22 +122,24 @@ CREATE TABLE `QuizQuestion` (
 
 -- 创建 UserQuizAnswer 表
 CREATE TABLE `UserQuizAnswer` (
+  `ID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
   `QuizID` int NOT NULL,
   `Answer` JSON NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`UserID`, `QuizID`),
+  PRIMARY KEY (`ID`),
   FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
 );
 
 -- 创建 UserQuizScore 表
 CREATE TABLE `UserQuizScore` (
+  `ID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
   `QuizID` int NOT NULL,
   `Score` int NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`UserID`, `QuizID`),
+  PRIMARY KEY (`ID`),
   FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
 );
