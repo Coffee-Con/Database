@@ -2,7 +2,7 @@ CREATE DATABASE COMP;
 
 USE COMP;
 
-CREATE TABLE `user` (
+CREATE TABLE `User` (
   `UserID` int NOT NULL AUTO_INCREMENT,
   `User` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
@@ -12,50 +12,50 @@ CREATE TABLE `user` (
   `HashedPW` varchar(45) NOT NULL,
   `registration_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- 创建 group 表
-CREATE TABLE `group` (
+CREATE TABLE `Group` (
   `GroupID` int NOT NULL AUTO_INCREMENT,
   `GroupName` varchar(100) NOT NULL,
   PRIMARY KEY (`GroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 -- 创建 group_user 中间表
-CREATE TABLE `group_user` (
+CREATE TABLE `GroupUser` (
   `GroupID` int NOT NULL,
   `UserID` int NOT NULL,
   PRIMARY KEY (`GroupID`, `UserID`),
-  FOREIGN KEY (`GroupID`) REFERENCES `group`(`GroupID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  FOREIGN KEY (`GroupID`) REFERENCES `Group`(`GroupID`),
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`)
+);
 
-CREATE TABLE `email_template` (
+CREATE TABLE `EmailTemplate` (
   `id` int NOT NULL AUTO_INCREMENT,
   `content` json NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
-CREATE TABLE `click_key` (
+CREATE TABLE `CickKey` (
   `key` varchar(45) NOT NULL,
   `userid` int NOT NULL,
   PRIMARY KEY (`key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
-CREATE TABLE `click_event` (
+CREATE TABLE `ClickEvent` (
   `id` int NOT NULL AUTO_INCREMENT,
   `key` varchar(45) NOT NULL,
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
-CREATE TABLE `reset_tokens` (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    token VARCHAR(64) NOT NULL,
-    token_expiry DATETIME NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES user(UserID) ON DELETE CASCADE
+CREATE TABLE `ResetTokens` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,
+    `token` VARCHAR(64) NOT NULL,
+    `token_expiry` DATETIME NOT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
 -- 创建 Course 表
@@ -67,12 +67,12 @@ CREATE TABLE `Course` (
 );
 
 -- 创建 Course_User 中间表
-CREATE TABLE `Course_User` (
+CREATE TABLE `CourseUser` (
   `UserID` int NOT NULL,
   `CourseID` int NOT NULL,
   PRIMARY KEY (`CourseID`, `UserID`),
   FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`)
 );
 
 -- 创建 Quiz 表 
@@ -128,7 +128,7 @@ CREATE TABLE `UserQuizAnswer` (
   `Answer` JSON NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
 );
 
@@ -140,7 +140,7 @@ CREATE TABLE `UserQuizScore` (
   `Score` int NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
 );
 
@@ -157,7 +157,7 @@ CREATE TABLE `UserQuizStatus` (
   `QuizID` int NOT NULL,
   `StatusID` int NOT NULL,
   PRIMARY KEY (`UserID`, `QuizID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
   FOREIGN KEY (`StatusID`) REFERENCES `QuizStatusType`(`StatusID`)
 );
@@ -166,9 +166,9 @@ CREATE TABLE `UserQuizStatus` (
 CREATE TABLE `CourseMaterial` (
   `MaterialID` int NOT NULL AUTO_INCREMENT,
   `CourseID` int NOT NULL,
-  `MaterialName` varchar(100) NOT NULL,
+  `MaterialName` varchar(100) DEFAULT 'Course Material',
   `MaterialDescription` varchar(100) DEFAULT 'Material Description',
-  `MaterialLink` varchar(100) NOT NULL, -- link to the material(a webpage or youtube video?)
+  `MaterialLink` varchar(100), -- link to the material(a webpage or youtube video?)
   PRIMARY KEY (`MaterialID`),
   FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`)
 );
@@ -179,7 +179,7 @@ CREATE TABLE `Reward` (
   `RewardName` varchar(100) NOT NULL,
   `RewardDescription` varchar(100) DEFAULT 'Reward Description',
   `RewardPoint` int NOT NULL, -- Price for the reward
-  `RewardLink` varchar(100) NOT NULL, -- link to the reward(a webpage?)
+  `RewardLink` varchar(100), -- link to the reward(a webpage?)
   PRIMARY KEY (`RewardID`)
 );
 
@@ -188,7 +188,7 @@ CREATE TABLE `UserRewardPoint` (
   `UserID` int NOT NULL,
   `RewardPoint` int NOT NULL,
   PRIMARY KEY (`UserID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`)
 );
 
 -- 创建 UserRewardPointHistory 表
@@ -208,11 +208,11 @@ CREATE TABLE `UserReward` (
   `RewardID` int NOT NULL,
   `RewardTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Time when the user get the reward
   PRIMARY KEY (`UserID`, `RewardID`),
-  FOREIGN KEY (`UserID`) REFERENCES `user`(`UserID`),
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
   FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`)
 );
 
-INSERT INTO `COMP`.`user` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
+INSERT INTO `COMP`.`User` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
 
 INSERT INTO `COMP`.`Course` (`CourseID`, `CourseName`) VALUES ('1', 'Anti-Phishing');
 INSERT INTO `COMP`.`Course_User` (`UserID`, `CourseID`) VALUES ('1', '1');
@@ -222,6 +222,7 @@ INSERT INTO `COMP`.`QuestionType` (`QuestionTypeID`, `QuestionTypeName`) VALUES 
 
 INSERT INTO `COMP`.`QuizStatusType` (`StatusID`, `StatusName`) VALUES ('1', 'ToDo');
 INSERT INTO `COMP`.`QuizStatusType` (`StatusID`, `StatusName`) VALUES ('2', 'Completed');
+
 INSERT INTO `COMP`.`Quiz` (`QuizID`, `QuizName`, `QuizDescription`) VALUES ('1', 'Testing', 'TestingDescription');
 INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`) VALUES ('1', 'A?', '1', '[{\"text\": \"A\", \"correct\": true}, {\"text\": \"B\", \"correct\": false}]');
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
