@@ -120,6 +120,18 @@ CREATE TABLE `QuizQuestion` (
   FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`) ON DELETE CASCADE
 );
 
+-- 创建 UserQuizQuestionAnswer 表
+CREATE TABLE `UserQuizQuestionAnswer` (
+  `UserID` int NOT NULL,
+  `QuizID` int NOT NULL,
+  `QuestionID` int NOT NULL,
+  `Answer` varchar(100) NOT NULL,
+  PRIMARY KEY (`UserID`, `QuizID`, `QuestionID`),
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
+  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`)
+);
+
 -- 创建 UserQuizAnswer 表
 CREATE TABLE `UserQuizAnswer` (
   `ID` int NOT NULL AUTO_INCREMENT,
@@ -229,3 +241,5 @@ INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '2');
+INSERT INTO `COMP`.`UserQuizQuestionAnswer` (`UserID`, `QuizID`, `QuestionID`, `Answer`) VALUES ('1', '1', '1', 'A');
+INSERT INTO `COMP`.`UserQuizQuestionAnswer` (`UserID`, `QuizID`, `QuestionID`, `Answer`) VALUES ('1', '1', '2', 'B');
