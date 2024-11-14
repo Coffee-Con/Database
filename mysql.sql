@@ -36,7 +36,7 @@ CREATE TABLE `EmailTemplate` (
   PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `CickKey` (
+CREATE TABLE `ClickKey` (
   `key` varchar(45) NOT NULL,
   `userid` int NOT NULL,
   PRIMARY KEY (`key`)
@@ -225,5 +225,7 @@ INSERT INTO `COMP`.`QuizStatusType` (`StatusID`, `StatusName`) VALUES ('2', 'Com
 
 INSERT INTO `COMP`.`Quiz` (`QuizID`, `QuizName`, `QuizDescription`) VALUES ('1', 'Testing', 'TestingDescription');
 INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`) VALUES ('1', 'A?', '1', '[{\"text\": \"A\", \"correct\": true}, {\"text\": \"B\", \"correct\": false}]');
+INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`) VALUES ('2', 'B?', '1', '[{\"text\": \"A\", \"correct\": false}, {\"text\": \"B\", \"correct\": true}]');
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '1');
+INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '2');
