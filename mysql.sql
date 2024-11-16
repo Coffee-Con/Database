@@ -26,8 +26,8 @@ CREATE TABLE `GroupUser` (
   `GroupID` int NOT NULL,
   `UserID` int NOT NULL,
   PRIMARY KEY (`GroupID`, `UserID`),
-  FOREIGN KEY (`GroupID`) REFERENCES `Group`(`GroupID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`)
+  FOREIGN KEY (`GroupID`) REFERENCES `Group`(`GroupID`) ON DELETE CASCADE,
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
 CREATE TABLE `EmailTemplate` (
@@ -71,8 +71,8 @@ CREATE TABLE `CourseUser` (
   `UserID` int NOT NULL,
   `CourseID` int NOT NULL,
   PRIMARY KEY (`CourseID`, `UserID`),
-  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`)
+  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE,
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
 -- 创建 Quiz 表 
@@ -90,8 +90,8 @@ CREATE TABLE `QuizCourse` (
   `QuizID` int NOT NULL,
   `CourseID` int NOT NULL,
   PRIMARY KEY (`QuizID`, `CourseID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
-  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`)
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE,
+  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE
 );
 
 -- 创建 QuestionType 表
@@ -127,9 +127,9 @@ CREATE TABLE `UserQuizQuestionAnswer` (
   `QuestionID` int NOT NULL,
   `Answer` varchar(100) NOT NULL,
   PRIMARY KEY (`UserID`, `QuizID`, `QuestionID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
-  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE,
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE,
+  FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`) ON DELETE CASCADE
 );
 
 -- 创建 UserQuizAnswer 表
@@ -140,8 +140,8 @@ CREATE TABLE `UserQuizAnswer` (
   `Answer` JSON NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE,
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE
 );
 
 -- 创建 UserQuizScore 表
@@ -152,8 +152,8 @@ CREATE TABLE `UserQuizScore` (
   `Score` int NOT NULL,
   `SubmitTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE,
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE
 );
 
 -- 创建 QuizStatusType 表
@@ -169,9 +169,9 @@ CREATE TABLE `UserQuizStatus` (
   `QuizID` int NOT NULL,
   `StatusID` int NOT NULL,
   PRIMARY KEY (`UserID`, `QuizID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
-  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`),
-  FOREIGN KEY (`StatusID`) REFERENCES `QuizStatusType`(`StatusID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE,
+  FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE,
+  FOREIGN KEY (`StatusID`) REFERENCES `QuizStatusType`(`StatusID`) ON DELETE CASCADE
 );
 
 -- 创建 CourseMaterial 表
@@ -182,7 +182,7 @@ CREATE TABLE `CourseMaterial` (
   `MaterialDescription` varchar(100) DEFAULT 'Material Description',
   `MaterialLink` varchar(100), -- link to the material(a webpage or youtube video?)
   PRIMARY KEY (`MaterialID`),
-  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`)
+  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE
 );
 
 -- 创建 Reward 表
@@ -200,7 +200,7 @@ CREATE TABLE `UserRewardPoint` (
   `UserID` int NOT NULL,
   `RewardPoint` int NOT NULL,
   PRIMARY KEY (`UserID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
 -- 创建 UserRewardPointHistory 表
@@ -220,8 +220,8 @@ CREATE TABLE `UserReward` (
   `RewardID` int NOT NULL,
   `RewardTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Time when the user get the reward
   PRIMARY KEY (`UserID`, `RewardID`),
-  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`),
-  FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`)
+  FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE,
+  FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`) ON DELETE CASCADE
 );
 
 INSERT INTO `COMP`.`User` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
