@@ -179,6 +179,7 @@ CREATE TABLE `Material` (
   `MaterialID` int NOT NULL AUTO_INCREMENT,
   `MaterialName` varchar(100) DEFAULT 'Course Material',
   `MaterialDescription` varchar(100) DEFAULT 'Material Description',
+  `MaterialType` int DEFAULT 1, -- 1: video, 2: pdf
   `MaterialLink` varchar(100), -- link to the material(a webpage or youtube video?)
   PRIMARY KEY (`MaterialID`)
 );
@@ -266,11 +267,11 @@ INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer
 ('20', 'If you have clicked on a malicious link in a phishing email, the best thing to do is:', '1', '[{\"text\": \"A. Ignore it\", \"correct\": false}, {\"text\": \"B. Change your password as soon as possible and contact the IT department\", \"correct\": true}, {\"text\": \"C. Continue browsing the link\", \"correct\": false}, {\"text\": \"D. Share the link with others\", \"correct\": false}]');
 
 INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`) VALUES 
-('21', 'Phishing emails usually use __________ technology to induce users to disclose personal information.', '1', '[{\"text\": \"Social engineering\", \"correct\": true}]'),
-('22', 'When you find a suspicious email, you should mark it as a __________ email and report it to the IT department.', '1', '[{\"text\": \"Phishing\", \"correct\": true}]'),
-('23', 'When you encounter a phishing email, it is best not to click on any __________ in the email or download attachments.', '1', '[{\"text\": \"Links\", \"correct\": true}]'),
-('24', '__________ phishing emails are attacks against specific individuals or organizations.', '1', '[{\"text\": \"Spear\", \"correct\": true}]'),
-('25', 'In order to prevent phishing email attacks, it is recommended that users enable the __________ function to increase account security.', '1', '[{\"text\": \"Two-factor authentication\", \"correct\": true}]');
+('21', 'Phishing emails usually use __________ technology to induce users to disclose personal information.', '2', '[{\"text\": \"Social engineering\", \"correct\": true}]'),
+('22', 'When you find a suspicious email, you should mark it as a __________ email and report it to the IT department.', '2', '[{\"text\": \"Phishing\", \"correct\": true}]'),
+('23', 'When you encounter a phishing email, it is best not to click on any __________ in the email or download attachments.', '2', '[{\"text\": \"Links\", \"correct\": true}]'),
+('24', '__________ phishing emails are attacks against specific individuals or organizations.', '2', '[{\"text\": \"Spear\", \"correct\": true}]'),
+('25', 'In order to prevent phishing email attacks, it is recommended that users enable the __________ function to increase account security.', '2', '[{\"text\": \"Two-factor authentication\", \"correct\": true}]');
 
 
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
