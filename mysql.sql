@@ -174,15 +174,22 @@ CREATE TABLE `UserQuizStatus` (
   FOREIGN KEY (`StatusID`) REFERENCES `QuizStatusType`(`StatusID`) ON DELETE CASCADE
 );
 
--- 创建 CourseMaterial 表
-CREATE TABLE `CourseMaterial` (
+-- 创建 Material 表
+CREATE TABLE `Material` (
   `MaterialID` int NOT NULL AUTO_INCREMENT,
-  `CourseID` int NOT NULL,
   `MaterialName` varchar(100) DEFAULT 'Course Material',
   `MaterialDescription` varchar(100) DEFAULT 'Material Description',
   `MaterialLink` varchar(100), -- link to the material(a webpage or youtube video?)
   PRIMARY KEY (`MaterialID`),
-  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE
+);
+
+-- 创建 CourseMaterial 中间表
+CREATE TABLE `CourseMaterial` (
+  `CourseID` int NOT NULL,
+  `MaterialID` int NOT NULL,
+  PRIMARY KEY (`CourseID`, `MaterialID`),
+  FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE,
+  FOREIGN KEY (`MaterialID`) REFERENCES `Material`(`MaterialID`) ON DELETE CASCADE
 );
 
 -- 创建 Reward 表
@@ -269,5 +276,3 @@ INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '2');
-INSERT INTO `COMP`.`UserQuizQuestionAnswer` (`UserID`, `QuizID`, `QuestionID`, `Answer`) VALUES ('1', '1', '1', 'A');
-INSERT INTO `COMP`.`UserQuizQuestionAnswer` (`UserID`, `QuizID`, `QuestionID`, `Answer`) VALUES ('1', '1', '2', 'B');
