@@ -180,7 +180,7 @@ CREATE TABLE `Material` (
   `MaterialName` varchar(100) DEFAULT 'Course Material',
   `MaterialDescription` varchar(100) DEFAULT 'Material Description',
   `MaterialLink` varchar(100), -- link to the material(a webpage or youtube video?)
-  PRIMARY KEY (`MaterialID`),
+  PRIMARY KEY (`MaterialID`)
 );
 
 -- 创建 CourseMaterial 中间表
