@@ -49,6 +49,15 @@ CREATE TABLE `ClickEvent` (
   PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `MailEvent` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `Emails` json NOT NULL,
+  `ClickKeys` json NOT NULL,
+  `Content` json NOT NULL,
+  `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`ID`)
+);
+
 CREATE TABLE `ResetTokens` (
     `id` INT AUTO_INCREMENT PRIMARY KEY,
     `user_id` INT NOT NULL,
@@ -271,9 +280,13 @@ INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer
 ('22', 'When you find a suspicious email, you should mark it as a __________ email and report it to the IT department.', '2', '[{\"text\": \"Phishing\", \"correct\": true}]'),
 ('23', 'When you encounter a phishing email, it is best not to click on any __________ in the email or download attachments.', '2', '[{\"text\": \"Links\", \"correct\": true}]'),
 ('24', '__________ phishing emails are attacks against specific individuals or organizations.', '2', '[{\"text\": \"Spear\", \"correct\": true}]'),
-('25', 'In order to prevent phishing email attacks, it is recommended that users enable the __________ function to increase account security.', '2', '[{\"text\": \"Two-factor authentication\", \"correct\": true}]');
+('25', 'In order to prevent phishing email attacks, it is recommended that users enable the __________ function to increase account security.', '2', '[{\"text\": \"Two-factor authentication\", \"correct\": true}]')
+
+INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`) VALUES ('26', 'a?', '1', '[{\"text\": \"aa\", \"correct\": false}, {\"text\": \"a\", \"correct\": true}, {\"text\": \"b\", \"correct\": false}]');
+
+INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer`) VALUES ('27', 'b?', '1', '[{\"text\": \"aa\", \"correct\": false}, {\"text\": \"a\", \"correct\": false}, {\"text\": \"b\", \"correct\": true}]');;
 
 
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
-INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '1');
-INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '2');
+INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '26');
+INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '27');
