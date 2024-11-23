@@ -38,7 +38,7 @@ CREATE TABLE `EmailTemplate` (
 
 CREATE TABLE `ClickKey` (
   `key` varchar(45) NOT NULL,
-  `userid` int NOT NULL,
+  `Email` varchar(45) NOT NULL,
   PRIMARY KEY (`key`)
 );
 
@@ -51,7 +51,6 @@ CREATE TABLE `ClickEvent` (
 
 CREATE TABLE `MailEvent` (
   `ID` int NOT NULL AUTO_INCREMENT,
-  `Emails` json NOT NULL,
   `ClickKeys` json NOT NULL,
   `Content` json NOT NULL,
   `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
