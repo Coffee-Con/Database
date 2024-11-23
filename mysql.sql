@@ -2,6 +2,8 @@ CREATE DATABASE COMP;
 
 USE COMP;
 
+ALTER SCHEMA `COMP`  DEFAULT COLLATE utf8mb4_unicode_ci ;
+
 CREATE TABLE `User` (
   `UserID` int NOT NULL AUTO_INCREMENT,
   `User` varchar(45) NOT NULL,
