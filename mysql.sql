@@ -12,17 +12,20 @@ CREATE TABLE `User` (
   `Salt` varchar(45) NOT NULL,
   `HashedPW` varchar(45) NOT NULL,
   `registration_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `JoinDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Education` VARCHAR(45) NOT NULL DEFAULT 'N.A.',
+  `ITLevel` VARCHAR(45) NOT NULL DEFAULT 'N.A.',
   PRIMARY KEY (`UserID`)
 );
 
--- 创建 group 表
+-- Create group Table
 CREATE TABLE `Group` (
   `GroupID` int NOT NULL AUTO_INCREMENT,
   `GroupName` varchar(100) NOT NULL,
   PRIMARY KEY (`GroupID`)
 );
 
--- 创建 group_user 中间表
+-- Create group_user Bridge Table
 CREATE TABLE `GroupUser` (
   `GroupID` int NOT NULL,
   `UserID` int NOT NULL,
@@ -67,7 +70,7 @@ CREATE TABLE `ResetTokens` (
     FOREIGN KEY (`user_id`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
--- 创建 Course 表
+-- Create Course Table
 CREATE TABLE `Course` (
   `CourseID` int NOT NULL AUTO_INCREMENT,
   `CourseName` varchar(100) NOT NULL,
@@ -75,7 +78,7 @@ CREATE TABLE `Course` (
   PRIMARY KEY (`CourseID`)
 );
 
--- 创建 CourseUser 中间表
+-- Create CourseUser Bridge Table
 CREATE TABLE `CourseUser` (
   `UserID` int NOT NULL,
   `CourseID` int NOT NULL,
@@ -84,7 +87,7 @@ CREATE TABLE `CourseUser` (
   FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
--- 创建 Quiz 表 
+-- Create Quiz Table 
 CREATE TABLE `Quiz` (
   `QuizID` int NOT NULL AUTO_INCREMENT,
   `QuizName` varchar(100) NOT NULL,
@@ -94,7 +97,7 @@ CREATE TABLE `Quiz` (
   PRIMARY KEY (`QuizID`)
 );
 
--- 创建 QuizCourse 中间表 -- 一个quiz可以对应多个course
+-- Create QuizCourse Bridge Table -- 1 quiz to many courses
 CREATE TABLE `QuizCourse` (
   `QuizID` int NOT NULL,
   `CourseID` int NOT NULL,
@@ -103,14 +106,14 @@ CREATE TABLE `QuizCourse` (
   FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE
 );
 
--- 创建 QuestionType 表
+-- Create QuestionType Table
 CREATE TABLE `QuestionType` (
   `QuestionTypeID` int NOT NULL AUTO_INCREMENT,
   `QuestionTypeName` varchar(100) NOT NULL,
   PRIMARY KEY (`QuestionTypeID`)
 );
 
--- 创建 Question 表
+-- Create Question Table
 CREATE TABLE `Question` (
   `QuestionID` int NOT NULL AUTO_INCREMENT,
   `Question` TEXT NOT NULL,
@@ -120,7 +123,7 @@ CREATE TABLE `Question` (
   FOREIGN KEY (`QuestionType`) REFERENCES `QuestionType`(`QuestionTypeID`)
 );
 
--- 创建 QuizQuestion 中间表
+-- Create QuizQuestion Bridge Table
 CREATE TABLE `QuizQuestion` (
   `QuizID` int NOT NULL,
   `QuestionID` int NOT NULL,
@@ -129,7 +132,7 @@ CREATE TABLE `QuizQuestion` (
   FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`) ON DELETE CASCADE
 );
 
--- 创建 UserQuizQuestionAnswer 表
+-- Create UserQuizQuestionAnswer Table
 CREATE TABLE `UserQuizQuestionAnswer` (
   `UserID` int NOT NULL,
   `QuizID` int NOT NULL,
@@ -141,7 +144,7 @@ CREATE TABLE `UserQuizQuestionAnswer` (
   FOREIGN KEY (`QuestionID`) REFERENCES `Question`(`QuestionID`) ON DELETE CASCADE
 );
 
--- 创建 UserQuizAnswer 表
+-- Create UserQuizAnswer Table
 CREATE TABLE `UserQuizAnswer` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
@@ -153,7 +156,7 @@ CREATE TABLE `UserQuizAnswer` (
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE
 );
 
--- 创建 UserQuizScore 表
+-- Create UserQuizScore Table
 CREATE TABLE `UserQuizScore` (
   `ID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
@@ -165,14 +168,14 @@ CREATE TABLE `UserQuizScore` (
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE
 );
 
--- 创建 QuizStatusType 表
+-- Create QuizStatusType Table
 CREATE TABLE `QuizStatusType` (
   `StatusID` int NOT NULL AUTO_INCREMENT,
   `StatusName` varchar(100) NOT NULL,
   PRIMARY KEY (`StatusID`)
 );
 
--- 创建 UserQuizStatus 表
+-- Create UserQuizStatus Table
 CREATE TABLE `UserQuizStatus` (
   `UserID` int NOT NULL,
   `QuizID` int NOT NULL,
@@ -183,7 +186,7 @@ CREATE TABLE `UserQuizStatus` (
   FOREIGN KEY (`StatusID`) REFERENCES `QuizStatusType`(`StatusID`) ON DELETE CASCADE
 );
 
--- 创建 Material 表
+-- Create Material Table
 CREATE TABLE `Material` (
   `MaterialID` int NOT NULL AUTO_INCREMENT,
   `MaterialName` varchar(100) DEFAULT 'Course Material',
@@ -193,7 +196,7 @@ CREATE TABLE `Material` (
   PRIMARY KEY (`MaterialID`)
 );
 
--- 创建 CourseMaterial 中间表
+-- Create CourseMaterial Bridge Table
 CREATE TABLE `CourseMaterial` (
   `CourseID` int NOT NULL,
   `MaterialID` int NOT NULL,
@@ -202,7 +205,7 @@ CREATE TABLE `CourseMaterial` (
   FOREIGN KEY (`MaterialID`) REFERENCES `Material`(`MaterialID`) ON DELETE CASCADE
 );
 
--- 创建 Reward 表
+-- Create Reward Table
 CREATE TABLE `Reward` (
   `RewardID` int NOT NULL AUTO_INCREMENT,
   `RewardName` varchar(100) NOT NULL,
@@ -212,7 +215,7 @@ CREATE TABLE `Reward` (
   PRIMARY KEY (`RewardID`)
 );
 
--- 创建 UserRewardPoint 表
+-- Create UserRewardPoint Table
 CREATE TABLE `UserRewardPoint` (
   `UserID` int NOT NULL,
   `RewardPoint` int NOT NULL,
@@ -220,7 +223,7 @@ CREATE TABLE `UserRewardPoint` (
   FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE
 );
 
--- 创建 UserRewardPointHistory 表
+-- Create UserRewardPointHistory Table
 CREATE TABLE `UserRewardPointHistory` (
   `ActionID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
@@ -231,7 +234,7 @@ CREATE TABLE `UserRewardPointHistory` (
   PRIMARY KEY (`ActionID`, `UserID`) -- 1ActionID to multiple UserID
 );
 
--- 创建 UserReward 表
+-- Create UserReward Table
 CREATE TABLE `UserReward` (
   `UserID` int NOT NULL,
   `RewardID` int NOT NULL,
