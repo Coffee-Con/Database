@@ -244,7 +244,7 @@ CREATE TABLE `UserReward` (
   FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`) ON DELETE CASCADE
 );
 
-INSERT INTO `COMP`.`User` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '67598873cfaaeb78bc468add9f104900', '2024-10-08 15:20:44'); -- admin default password: 123456
+INSERT INTO `COMP`.`User` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '6a04f435bb6c4d16ee440f1e982402b6', '2024-10-08 15:20:44'); -- admin default password: !&4*$f0YB6gII3**
 
 INSERT INTO `COMP`.`Course` (`CourseID`, `CourseName`) VALUES ('1', 'Anti-Phishing');
 INSERT INTO `COMP`.`CourseUser` (`UserID`, `CourseID`) VALUES ('1', '1');
