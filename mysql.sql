@@ -5,7 +5,6 @@ ALTER SCHEMA `COMP` DEFAULT COLLATE utf8mb4_unicode_ci ;
 
 CREATE TABLE `User` (
   `UserID` int NOT NULL AUTO_INCREMENT,
-  `User` varchar(45) NOT NULL,
   `Email` varchar(45) NOT NULL,
   `Name` varchar(45) NOT NULL,
   `Role` int NOT NULL DEFAULT '0',
@@ -58,6 +57,7 @@ CREATE TABLE `MailEvent` (
   `ClickKeys` json NOT NULL,
   `Content` json NOT NULL,
   `Time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Status` int NOT NULL DEFAULT '0', -- 0: not completed, 1: completed
   PRIMARY KEY (`ID`)
 );
 
@@ -101,6 +101,7 @@ CREATE TABLE `Quiz` (
 CREATE TABLE `QuizCourse` (
   `QuizID` int NOT NULL,
   `CourseID` int NOT NULL,
+  `Status` int DEFAULT 1, -- 1: ToDo, 2: End
   PRIMARY KEY (`QuizID`, `CourseID`),
   FOREIGN KEY (`QuizID`) REFERENCES `Quiz`(`QuizID`) ON DELETE CASCADE,
   FOREIGN KEY (`CourseID`) REFERENCES `Course`(`CourseID`) ON DELETE CASCADE
@@ -236,15 +237,17 @@ CREATE TABLE `UserRewardPointHistory` (
 
 -- Create UserReward Table
 CREATE TABLE `UserReward` (
+  `ID` int NOT NULL AUTO_INCREMENT,
   `UserID` int NOT NULL,
   `RewardID` int NOT NULL,
   `RewardTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, -- Time when the user get the reward
-  PRIMARY KEY (`UserID`, `RewardID`),
+  `Status` int DEFAULT 1, -- 1: ToDo, 2: Completed
+  PRIMARY KEY (`ID`),
   FOREIGN KEY (`UserID`) REFERENCES `User`(`UserID`) ON DELETE CASCADE,
   FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`) ON DELETE CASCADE
 );
 
-INSERT INTO `COMP`.`User` (`UserID`, `User`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'xyz@email.com', 'xyz@email.com', 'Yu', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '6a04f435bb6c4d16ee440f1e982402b6', '2024-10-08 15:20:44'); -- admin default password: !&4*$f0YB6gII3**
+INSERT INTO `COMP`.`User` (`UserID`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'admin@staffcanvas.xyz', 'AdminTest', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '6a04f435bb6c4d16ee440f1e982402b6', '2024-10-08 15:20:44'); -- admin default password: !&4*$f0YB6gII3**
 
 INSERT INTO `COMP`.`Course` (`CourseID`, `CourseName`) VALUES ('1', 'Anti-Phishing');
 INSERT INTO `COMP`.`CourseUser` (`UserID`, `CourseID`) VALUES ('1', '1');
@@ -289,3 +292,5 @@ INSERT INTO `COMP`.`Question` (`QuestionID`, `Question`, `QuestionType`, `Answer
 INSERT INTO `COMP`.`QuizCourse` (`QuizID`, `CourseID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '1');
 INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES ('1', '2');
+
+INSERT INTO `COMP`.`Material` (`MaterialID`, `MaterialName`, `MaterialDescription`, `MaterialType`, `MaterialLink`) VALUES ('1', 'Phishing Attacks Guide', 'Phishing Attacks Guide', '2', 'https://staffcanvs.xyz/user/material/PhishingEmailMaterials.pdf');
