@@ -295,7 +295,7 @@ INSERT INTO `COMP`.`QuizQuestion` (`QuizID`, `QuestionID`) VALUES
 ('1', '1'),('1', '2'),('1', '3'),('1', '4'),('1', '5'),('1', '6'),('1', '7'),('1', '8'),('1', '9'),('1', '10'),('1', '11'),('1', '12'),('1', '13'),('1', '14'),('1', '15'),('1', '16'),('1', '17'),('1', '18'),('1', '19'),('1', '20'),('1', '21'),('1', '22'),('1', '23'),('1', '24'),('1', '25');
 
 INSERT INTO `COMP`.`Material` (`MaterialID`, `MaterialName`, `MaterialDescription`, `MaterialType`, `MaterialLink`) VALUES
-('1', 'Phishing Attacks Guide', 'Phishing Attacks Guide', '2', 'https://staffcanvs.xyz/user/material/PhishingEmailMaterials.pdf'),
+('1', 'Phishing Attacks Guide', 'Phishing Attacks Guide', '2', 'https://staffcanvas.xyz/user/material/PhishingEmailMaterials.pdf'),
 ('2', 'Phishing Attacks Video', 'Youtube Video', '1', 'https://www.youtube.com/watch?v=XBkzBrXlle0');
 
 INSERT INTO `COMP`.`CourseMaterial` (`CourseID`, `MaterialID`) VALUES
