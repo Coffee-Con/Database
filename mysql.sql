@@ -300,3 +300,5 @@ INSERT INTO `COMP`.`Material` (`MaterialID`, `MaterialName`, `MaterialDescriptio
 
 INSERT INTO `COMP`.`CourseMaterial` (`CourseID`, `MaterialID`) VALUES
 ('1', '1'), ('1', '2');
+
+INSERT INTO `COMP`.`EmailTemplate` (`id`, `content`) VALUES ('1', '{\"content\": \"Dear [name],  \\n\\nWe notice that your employee account has been some issues, for further information please access [here]([link]).\\n\\nBest Regards,  \\nIT Support Team  \\n________________________________________________________________________________________________________________\", \"subject\": \"Urgent! Employee Account Issues\"}');
