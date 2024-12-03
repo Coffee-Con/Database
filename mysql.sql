@@ -246,7 +246,7 @@ CREATE TABLE `UserReward` (
   FOREIGN KEY (`RewardID`) REFERENCES `Reward`(`RewardID`) ON DELETE CASCADE
 );
 
-INSERT INTO `COMP`.`User` (`UserID`, `Email`, `Name`, `Role`, `Salt`, `HashedPW`, `registration_time`) VALUES ('1', 'admin@staffcanvas.xyz', 'AdminTest', '1', 'ceedfeb40d54fcd60c4aec77a67486fe', '6a04f435bb6c4d16ee440f1e982402b6', '2024-10-08 15:20:44'); -- admin default password: !&4*$f0YB6gII3**
+INSERT INTO `COMP`.`User` (`Email`, `Name`, `Role`, `Salt`, `HashedPW`) VALUES ('a1dmin@staffcanvas.xyz', 'AdminTest', '1', '3ae7e226e43d5922892f776f2168477e', '8dcaa88e8fe5991443d504701c3581ef'); -- admin default password: ABCabc123.  You can change the Default account Email here, and You should change the password after running the server.
 
 INSERT INTO `COMP`.`Group` (`GroupID`, `GroupName`) VALUES ('1', 'Group1');
 
